@@ -1,0 +1,292 @@
+{
+  "extra": {
+    "drop_file": false,
+    "score": 800,
+    "sections": [
+      {
+        "auto_collapse": false,
+        "body": [
+          {
+            "Command": "/dev/tcp",
+            "How found": "raw TCP",
+            "Status": "emitted for download",
+            "URL": "http://198.51.100.71/cfg"
+          },
+          {
+            "Command": "curl, wget",
+            "How found": "variable",
+            "Status": "emitted for download",
+            "URL": "http://198.51.100.70/sysmon-arm.gz"
+          },
+          {
+            "Command": "curl, wget",
+            "How found": "variable",
+            "Status": "emitted for download",
+            "URL": "http://198.51.100.70/sysmon-mips.gz"
+          },
+          {
+            "Command": "curl, wget",
+            "How found": "variable",
+            "Status": "emitted for download",
+            "URL": "http://198.51.100.70/sysmon.gz"
+          },
+          {
+            "Command": "wget",
+            "How found": "decoded",
+            "Status": "emitted for download",
+            "URL": "http://198.51.100.90/x86"
+          }
+        ],
+        "body_config": {
+          "column_order": [
+            "URL",
+            "Command",
+            "How found",
+            "Status"
+          ]
+        },
+        "body_format": "TABLE",
+        "classification": "TLP:C",
+        "depth": 0,
+        "heuristic": {
+          "attack_ids": [
+            "T1105"
+          ],
+          "frequency": 1,
+          "heur_id": 1,
+          "score": 100,
+          "score_map": {},
+          "signatures": {}
+        },
+        "promote_to": null,
+        "tags": {
+          "file": {
+            "behavior": [
+              "Downloader: /dev/tcp",
+              "Downloader: curl",
+              "Downloader: wget"
+            ]
+          },
+          "network": {
+            "static": {
+              "ip": [
+                "198.51.100.71",
+                "198.51.100.70",
+                "198.51.100.90"
+              ],
+              "uri": [
+                "http://198.51.100.71/cfg",
+                "http://198.51.100.70/sysmon-arm.gz",
+                "http://198.51.100.70/sysmon-mips.gz",
+                "http://198.51.100.70/sysmon.gz",
+                "http://198.51.100.90/x86"
+              ]
+            }
+          }
+        },
+        "title_text": "Download commands (5 URL(s))",
+        "zeroize_on_tag_safe": false
+      },
+      {
+        "auto_collapse": false,
+        "body": "3 distinct download URLs in 198.51.100.70/: typical of a loader fetching one payload per CPU architecture.",
+        "body_config": {},
+        "body_format": "TEXT",
+        "classification": "TLP:C",
+        "depth": 1,
+        "heuristic": {
+          "attack_ids": [
+            "T1105"
+          ],
+          "frequency": 1,
+          "heur_id": 2,
+          "score": 300,
+          "score_map": {},
+          "signatures": {}
+        },
+        "promote_to": null,
+        "tags": {},
+        "title_text": "Multi-stage dropper",
+        "zeroize_on_tag_safe": false
+      },
+      {
+        "auto_collapse": false,
+        "body": "Download host(s) without a DNS name: 198.51.100.70, 198.51.100.71, 198.51.100.90",
+        "body_config": {},
+        "body_format": "TEXT",
+        "classification": "TLP:C",
+        "depth": 1,
+        "heuristic": {
+          "attack_ids": [
+            "T1105"
+          ],
+          "frequency": 1,
+          "heur_id": 4,
+          "score": 100,
+          "score_map": {},
+          "signatures": {}
+        },
+        "promote_to": null,
+        "tags": {},
+        "title_text": "Payload fetched from bare IP address",
+        "zeroize_on_tag_safe": false
+      },
+      {
+        "auto_collapse": false,
+        "body": "1 URL(s) appear only after decoding base64, escape sequences or a piped script (How found: decoded).",
+        "body_config": {},
+        "body_format": "TEXT",
+        "classification": "TLP:C",
+        "depth": 1,
+        "heuristic": {
+          "attack_ids": [
+            "T1027",
+            "T1105"
+          ],
+          "frequency": 1,
+          "heur_id": 5,
+          "score": 300,
+          "score_map": {},
+          "signatures": {}
+        },
+        "promote_to": null,
+        "tags": {
+          "file": {
+            "behavior": [
+              "Encoded download URL"
+            ]
+          }
+        },
+        "title_text": "Download URL hidden by encoding",
+        "zeroize_on_tag_safe": false
+      }
+    ]
+  },
+  "files": {
+    "extracted": [
+      {
+        "name": "http://198.51.100.70/sysmon-mips.gz",
+        "sha256": "095869fc0d1d7bf18f912273349b6b668bfbaa5f72ae228127d3f058ff581569"
+      },
+      {
+        "name": "http://198.51.100.70/sysmon-arm.gz",
+        "sha256": "26525b52ad7cd2676a26ebae3473e3e567fec4eb793846eb6da445eae433d398"
+      },
+      {
+        "name": "http://198.51.100.90/x86",
+        "sha256": "5ddbec6c162161d373d767a922b8b9d01207aae57f9b19ac102869205648c14d"
+      },
+      {
+        "name": "http://198.51.100.70/sysmon.gz",
+        "sha256": "c627de263150846cf9de3e68395e0ba60e213c4001ca8a51efd3cb51d57dfc08"
+      },
+      {
+        "name": "http://198.51.100.71/cfg",
+        "sha256": "ed74dd26d26c54d8271a230a979bdc6a2b0deccf57eade886600897f2addfc3c"
+      }
+    ],
+    "supplementary": []
+  },
+  "results": {
+    "heuristics": [
+      {
+        "attack_ids": [
+          "T1105"
+        ],
+        "heur_id": 1,
+        "signatures": []
+      },
+      {
+        "attack_ids": [
+          "T1105"
+        ],
+        "heur_id": 2,
+        "signatures": []
+      },
+      {
+        "attack_ids": [
+          "T1105"
+        ],
+        "heur_id": 4,
+        "signatures": []
+      },
+      {
+        "attack_ids": [
+          "T1027",
+          "T1105"
+        ],
+        "heur_id": 5,
+        "signatures": []
+      }
+    ],
+    "tags": {
+      "file.behavior": [
+        {
+          "heur_id": 1,
+          "signatures": [],
+          "value": "Downloader: /dev/tcp"
+        },
+        {
+          "heur_id": 1,
+          "signatures": [],
+          "value": "Downloader: curl"
+        },
+        {
+          "heur_id": 1,
+          "signatures": [],
+          "value": "Downloader: wget"
+        },
+        {
+          "heur_id": 5,
+          "signatures": [],
+          "value": "Encoded download URL"
+        }
+      ],
+      "network.static.ip": [
+        {
+          "heur_id": 1,
+          "signatures": [],
+          "value": "198.51.100.70"
+        },
+        {
+          "heur_id": 1,
+          "signatures": [],
+          "value": "198.51.100.71"
+        },
+        {
+          "heur_id": 1,
+          "signatures": [],
+          "value": "198.51.100.90"
+        }
+      ],
+      "network.static.uri": [
+        {
+          "heur_id": 1,
+          "signatures": [],
+          "value": "http://198.51.100.70/sysmon-arm.gz"
+        },
+        {
+          "heur_id": 1,
+          "signatures": [],
+          "value": "http://198.51.100.70/sysmon-mips.gz"
+        },
+        {
+          "heur_id": 1,
+          "signatures": [],
+          "value": "http://198.51.100.70/sysmon.gz"
+        },
+        {
+          "heur_id": 1,
+          "signatures": [],
+          "value": "http://198.51.100.71/cfg"
+        },
+        {
+          "heur_id": 1,
+          "signatures": [],
+          "value": "http://198.51.100.90/x86"
+        }
+      ]
+    },
+    "temp_submission_data": {}
+  }
+}

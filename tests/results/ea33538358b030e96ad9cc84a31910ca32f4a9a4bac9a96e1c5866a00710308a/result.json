@@ -1,0 +1,316 @@
+{
+  "extra": {
+    "drop_file": false,
+    "score": 1100,
+    "sections": [
+      {
+        "auto_collapse": false,
+        "body": [
+          {
+            "Command": "curl, wget",
+            "How found": "literal",
+            "Status": "emitted for download",
+            "URL": "http://198.51.100.61/7007c2"
+          },
+          {
+            "Command": "curl, wget",
+            "How found": "literal",
+            "Status": "emitted for download",
+            "URL": "http://198.51.100.61/414b84"
+          },
+          {
+            "Command": "curl, wget",
+            "How found": "literal",
+            "Status": "emitted for download",
+            "URL": "http://198.51.100.61/f73a42"
+          },
+          {
+            "Command": "curl, wget",
+            "How found": "literal",
+            "Status": "emitted for download",
+            "URL": "http://198.51.100.61/4ec6b1"
+          },
+          {
+            "Command": "curl, wget",
+            "How found": "literal",
+            "Status": "emitted for download",
+            "URL": "http://198.51.100.61/908942"
+          },
+          {
+            "Command": "curl, wget",
+            "How found": "literal",
+            "Status": "emitted for download",
+            "URL": "http://198.51.100.61/0a7340"
+          }
+        ],
+        "body_config": {
+          "column_order": [
+            "URL",
+            "Command",
+            "How found",
+            "Status"
+          ]
+        },
+        "body_format": "TABLE",
+        "classification": "TLP:C",
+        "depth": 0,
+        "heuristic": {
+          "attack_ids": [
+            "T1105"
+          ],
+          "frequency": 1,
+          "heur_id": 1,
+          "score": 100,
+          "score_map": {},
+          "signatures": {}
+        },
+        "promote_to": null,
+        "tags": {
+          "file": {
+            "behavior": [
+              "Downloader: curl",
+              "Downloader: wget"
+            ]
+          },
+          "network": {
+            "static": {
+              "ip": [
+                "198.51.100.61"
+              ],
+              "uri": [
+                "http://198.51.100.61/7007c2",
+                "http://198.51.100.61/414b84",
+                "http://198.51.100.61/f73a42",
+                "http://198.51.100.61/4ec6b1",
+                "http://198.51.100.61/908942",
+                "http://198.51.100.61/0a7340"
+              ]
+            }
+          }
+        },
+        "title_text": "Download commands (6 URL(s))",
+        "zeroize_on_tag_safe": false
+      },
+      {
+        "auto_collapse": false,
+        "body": "6 distinct download URLs in 198.51.100.61/: typical of a loader fetching one payload per CPU architecture.",
+        "body_config": {},
+        "body_format": "TEXT",
+        "classification": "TLP:C",
+        "depth": 1,
+        "heuristic": {
+          "attack_ids": [
+            "T1105"
+          ],
+          "frequency": 1,
+          "heur_id": 2,
+          "score": 300,
+          "score_map": {},
+          "signatures": {}
+        },
+        "promote_to": null,
+        "tags": {},
+        "title_text": "Multi-stage dropper",
+        "zeroize_on_tag_safe": false
+      },
+      {
+        "auto_collapse": false,
+        "body": "Script downloads a payload, marks it executable, runs it, then removes it.",
+        "body_config": {},
+        "body_format": "TEXT",
+        "classification": "TLP:C",
+        "depth": 1,
+        "heuristic": {
+          "attack_ids": [
+            "T1105",
+            "T1059.004",
+            "T1222.002",
+            "T1070.004"
+          ],
+          "frequency": 1,
+          "heur_id": 3,
+          "score": 600,
+          "score_map": {},
+          "signatures": {
+            "chmod_777": 1,
+            "exec_downloaded": 1,
+            "self_delete": 1
+          }
+        },
+        "promote_to": null,
+        "tags": {
+          "file": {
+            "behavior": [
+              "Download and execute",
+              "Self-delete"
+            ]
+          }
+        },
+        "title_text": "Download, execute and self-delete chain",
+        "zeroize_on_tag_safe": false
+      },
+      {
+        "auto_collapse": false,
+        "body": "Download host(s) without a DNS name: 198.51.100.61",
+        "body_config": {},
+        "body_format": "TEXT",
+        "classification": "TLP:C",
+        "depth": 1,
+        "heuristic": {
+          "attack_ids": [
+            "T1105"
+          ],
+          "frequency": 1,
+          "heur_id": 4,
+          "score": 100,
+          "score_map": {},
+          "signatures": {}
+        },
+        "promote_to": null,
+        "tags": {},
+        "title_text": "Payload fetched from bare IP address",
+        "zeroize_on_tag_safe": false
+      }
+    ]
+  },
+  "files": {
+    "extracted": [
+      {
+        "name": "http://198.51.100.61/4ec6b1",
+        "sha256": "1f49cd486cc828566ff100090bd7f3b4e3e80e5d32db7bd916c5f356c02886d7"
+      },
+      {
+        "name": "http://198.51.100.61/0a7340",
+        "sha256": "2acfbfc866c0b024cf9aedd4330989e7962743f1cab4f3d8328003a1d4528adb"
+      },
+      {
+        "name": "http://198.51.100.61/f73a42",
+        "sha256": "3db03eb7c659d0c80d44f3bf3463896e87f48c4e64ef6dc9414d0a88590b6a0e"
+      },
+      {
+        "name": "http://198.51.100.61/7007c2",
+        "sha256": "4e47ad6996d9f477109e2f47585f43c2a38b1c0aab8365b4c9e74b2b50b28d39"
+      },
+      {
+        "name": "http://198.51.100.61/908942",
+        "sha256": "4e7ba669eeef26513517c959d16d3eeda51254ca939c52a1c2467ab1187d7534"
+      },
+      {
+        "name": "http://198.51.100.61/414b84",
+        "sha256": "d0c0ba244f32482f51c3662c87e73a31184a27b5179fbde9c256cd1f58e092b5"
+      }
+    ],
+    "supplementary": []
+  },
+  "results": {
+    "heuristics": [
+      {
+        "attack_ids": [
+          "T1105"
+        ],
+        "heur_id": 1,
+        "signatures": []
+      },
+      {
+        "attack_ids": [
+          "T1105"
+        ],
+        "heur_id": 2,
+        "signatures": []
+      },
+      {
+        "attack_ids": [
+          "T1105",
+          "T1059.004",
+          "T1222.002",
+          "T1070.004"
+        ],
+        "heur_id": 3,
+        "signatures": [
+          "chmod_777",
+          "exec_downloaded",
+          "self_delete"
+        ]
+      },
+      {
+        "attack_ids": [
+          "T1105"
+        ],
+        "heur_id": 4,
+        "signatures": []
+      }
+    ],
+    "tags": {
+      "file.behavior": [
+        {
+          "heur_id": 3,
+          "signatures": [
+            "chmod_777",
+            "exec_downloaded",
+            "self_delete"
+          ],
+          "value": "Download and execute"
+        },
+        {
+          "heur_id": 1,
+          "signatures": [],
+          "value": "Downloader: curl"
+        },
+        {
+          "heur_id": 1,
+          "signatures": [],
+          "value": "Downloader: wget"
+        },
+        {
+          "heur_id": 3,
+          "signatures": [
+            "chmod_777",
+            "exec_downloaded",
+            "self_delete"
+          ],
+          "value": "Self-delete"
+        }
+      ],
+      "network.static.ip": [
+        {
+          "heur_id": 1,
+          "signatures": [],
+          "value": "198.51.100.61"
+        }
+      ],
+      "network.static.uri": [
+        {
+          "heur_id": 1,
+          "signatures": [],
+          "value": "http://198.51.100.61/0a7340"
+        },
+        {
+          "heur_id": 1,
+          "signatures": [],
+          "value": "http://198.51.100.61/414b84"
+        },
+        {
+          "heur_id": 1,
+          "signatures": [],
+          "value": "http://198.51.100.61/4ec6b1"
+        },
+        {
+          "heur_id": 1,
+          "signatures": [],
+          "value": "http://198.51.100.61/7007c2"
+        },
+        {
+          "heur_id": 1,
+          "signatures": [],
+          "value": "http://198.51.100.61/908942"
+        },
+        {
+          "heur_id": 1,
+          "signatures": [],
+          "value": "http://198.51.100.61/f73a42"
+        }
+      ]
+    },
+    "temp_submission_data": {}
+  }
+}

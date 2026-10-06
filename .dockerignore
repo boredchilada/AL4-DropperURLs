@@ -1,0 +1,11 @@
+.git/
+.github/
+.forgejo/
+.venv/
+venv/
+__pycache__/
+tests/
+scripts/
+docs/
+*.md
+publish/

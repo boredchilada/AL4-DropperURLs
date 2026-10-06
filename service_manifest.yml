@@ -1,0 +1,107 @@
+name: DropperURLs
+version: $SERVICE_TAG
+description: >-
+  Extracts download URLs from dropper and stager scripts (wget, curl, tftp, ftpget, busybox,
+  certutil, PowerShell, Python, raw /dev/tcp requests) and emits each HTTP(S) URL as a uri/ file
+  so URLDownloader can fetch the next stage. Resolves shell variables and decodes base64, hex
+  and octal escapes and ${IFS} tricks before matching. URLs are emitted whatever they score.
+
+accepts: "code/.*|text/plain"
+rejects: "empty|metadata/.*|uri/.*"
+
+stage: CORE
+category: Static Analysis
+
+file_required: true
+timeout: 60
+disable_cache: false
+enabled: true
+is_external: false
+privileged: false
+
+config:
+  # Hard ceiling regardless of max_uris; protects against a generated script with thousands of URLs.
+  max_uris_limit: 200
+
+submission_params:
+  # Emit each discovered HTTP(S) URL as a uri/ file for URLDownloader to fetch.
+  - name: emit_uris
+    type: bool
+    default: true
+    value: true
+  # Maximum number of uri/ files to emit (capped by config.max_uris_limit).
+  - name: max_uris
+    type: int
+    default: 50
+    value: 50
+  # Tag tftp/ftp download URLs (URLDownloader cannot fetch these; tagged only).
+  - name: tag_non_http
+    type: bool
+    default: true
+    value: true
+
+heuristics:
+  - heur_id: 1
+    name: Download command in script
+    description: >-
+      The script invokes a file-download utility (wget, curl, tftp, ftpget, busybox, certutil,
+      Invoke-WebRequest, urllib). The referenced URLs are emitted as uri/ files.
+    filetype: ".*"
+    score: 100
+    attack_id:
+      - T1105
+
+  - heur_id: 2
+    name: Multi-stage dropper
+    description: >-
+      Three or more distinct download URLs in one directory of one host, from a bare IP address
+      or with mostly extensionless file names. Typical of IoT botnet loaders that fetch one payload
+      per CPU architecture.
+    filetype: ".*"
+    score: 300
+    attack_id:
+      - T1105
+
+  - heur_id: 3
+    name: Download, execute and self-delete chain
+    description: >-
+      The script downloads a file, makes it executable (chmod), runs it, then removes it.
+      Typical of Mirai and Gafgyt loaders.
+    filetype: ".*"
+    score: 500
+    attack_id:
+      - T1105
+      - T1059.004
+      - T1222.002
+      - T1070.004
+    signature_score_map:
+      chmod_777: 200
+      self_delete: 150
+      exec_downloaded: 250
+
+  - heur_id: 4
+    name: Payload fetched from bare IP address
+    description: >-
+      A download URL uses an IP address as its host. Common for throwaway staging
+      infrastructure.
+    filetype: ".*"
+    score: 100
+    attack_id:
+      - T1105
+
+  - heur_id: 5
+    name: Download URL hidden by encoding
+    description: >-
+      A download URL appears only after decoding base64, hex or octal escape sequences, or a
+      base64 script piped into a shell.
+    filetype: ".*"
+    score: 300
+    attack_id:
+      - T1027
+      - T1105
+
+docker_config:
+  image: ghcr.io/boredchilada/al4-dropperurls:$SERVICE_TAG
+  allow_internet_access: false
+  cpu_cores: 0.5
+  ram_mb: 512

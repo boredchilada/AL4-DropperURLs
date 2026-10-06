@@ -1,0 +1,4 @@
+# Framework packages: unpinned, provided by the base image.
+assemblyline
+assemblyline-v4-service
+# Third-party packages: pin exactly with ==

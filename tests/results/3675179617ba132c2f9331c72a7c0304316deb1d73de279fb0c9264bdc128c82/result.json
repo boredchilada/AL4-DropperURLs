@@ -1,0 +1,217 @@
+{
+  "extra": {
+    "drop_file": false,
+    "score": 200,
+    "sections": [
+      {
+        "auto_collapse": false,
+        "body": [
+          {
+            "Command": "wget",
+            "How found": "literal",
+            "Status": "emitted for download",
+            "URL": "http://192.0.2.9:8080/arm7"
+          },
+          {
+            "Command": "curl",
+            "How found": "literal",
+            "Status": "emitted for download",
+            "URL": "https://cdn.example.net/stage2.elf"
+          },
+          {
+            "Command": "certutil",
+            "How found": "literal",
+            "Status": "emitted for download",
+            "URL": "http://203.0.113.4/a.exe"
+          },
+          {
+            "Command": "tftp",
+            "How found": "literal",
+            "Status": "not emitted: URLDownloader fetches only HTTP(S)",
+            "URL": "tftp://192.0.2.5/mips.bin"
+          }
+        ],
+        "body_config": {
+          "column_order": [
+            "URL",
+            "Command",
+            "How found",
+            "Status"
+          ]
+        },
+        "body_format": "TABLE",
+        "classification": "TLP:C",
+        "depth": 0,
+        "heuristic": {
+          "attack_ids": [
+            "T1105"
+          ],
+          "frequency": 1,
+          "heur_id": 1,
+          "score": 100,
+          "score_map": {},
+          "signatures": {}
+        },
+        "promote_to": null,
+        "tags": {
+          "file": {
+            "behavior": [
+              "Downloader: certutil",
+              "Downloader: curl",
+              "Downloader: tftp",
+              "Downloader: wget"
+            ]
+          },
+          "network": {
+            "static": {
+              "domain": [
+                "cdn.example.net"
+              ],
+              "ip": [
+                "192.0.2.9",
+                "203.0.113.4",
+                "192.0.2.5"
+              ],
+              "uri": [
+                "http://192.0.2.9:8080/arm7",
+                "https://cdn.example.net/stage2.elf",
+                "http://203.0.113.4/a.exe",
+                "tftp://192.0.2.5/mips.bin"
+              ]
+            }
+          }
+        },
+        "title_text": "Download commands (4 URL(s))",
+        "zeroize_on_tag_safe": false
+      },
+      {
+        "auto_collapse": false,
+        "body": "Download host(s) without a DNS name: 192.0.2.5, 192.0.2.9, 203.0.113.4",
+        "body_config": {},
+        "body_format": "TEXT",
+        "classification": "TLP:C",
+        "depth": 1,
+        "heuristic": {
+          "attack_ids": [
+            "T1105"
+          ],
+          "frequency": 1,
+          "heur_id": 4,
+          "score": 100,
+          "score_map": {},
+          "signatures": {}
+        },
+        "promote_to": null,
+        "tags": {},
+        "title_text": "Payload fetched from bare IP address",
+        "zeroize_on_tag_safe": false
+      }
+    ]
+  },
+  "files": {
+    "extracted": [
+      {
+        "name": "https://cdn.example.net/stage2.elf",
+        "sha256": "19f7de418d47fcba4b9f98ee840815fc5968b68cc5d7b0147f4258981d035416"
+      },
+      {
+        "name": "http://203.0.113.4/a.exe",
+        "sha256": "693f9211fe8ff16fd6d4ce36f4f79f852c9f8690b393a5a6e238478c32798dbd"
+      },
+      {
+        "name": "http://192.0.2.9:8080/arm7",
+        "sha256": "f75f20d53252a8f19839d570ca3be0df210b8e1667c0c37725e4ec39226d056c"
+      }
+    ],
+    "supplementary": []
+  },
+  "results": {
+    "heuristics": [
+      {
+        "attack_ids": [
+          "T1105"
+        ],
+        "heur_id": 1,
+        "signatures": []
+      },
+      {
+        "attack_ids": [
+          "T1105"
+        ],
+        "heur_id": 4,
+        "signatures": []
+      }
+    ],
+    "tags": {
+      "file.behavior": [
+        {
+          "heur_id": 1,
+          "signatures": [],
+          "value": "Downloader: certutil"
+        },
+        {
+          "heur_id": 1,
+          "signatures": [],
+          "value": "Downloader: curl"
+        },
+        {
+          "heur_id": 1,
+          "signatures": [],
+          "value": "Downloader: tftp"
+        },
+        {
+          "heur_id": 1,
+          "signatures": [],
+          "value": "Downloader: wget"
+        }
+      ],
+      "network.static.domain": [
+        {
+          "heur_id": 1,
+          "signatures": [],
+          "value": "cdn.example.net"
+        }
+      ],
+      "network.static.ip": [
+        {
+          "heur_id": 1,
+          "signatures": [],
+          "value": "192.0.2.5"
+        },
+        {
+          "heur_id": 1,
+          "signatures": [],
+          "value": "192.0.2.9"
+        },
+        {
+          "heur_id": 1,
+          "signatures": [],
+          "value": "203.0.113.4"
+        }
+      ],
+      "network.static.uri": [
+        {
+          "heur_id": 1,
+          "signatures": [],
+          "value": "http://192.0.2.9:8080/arm7"
+        },
+        {
+          "heur_id": 1,
+          "signatures": [],
+          "value": "http://203.0.113.4/a.exe"
+        },
+        {
+          "heur_id": 1,
+          "signatures": [],
+          "value": "https://cdn.example.net/stage2.elf"
+        },
+        {
+          "heur_id": 1,
+          "signatures": [],
+          "value": "tftp://192.0.2.5/mips.bin"
+        }
+      ]
+    },
+    "temp_submission_data": {}
+  }
+}
